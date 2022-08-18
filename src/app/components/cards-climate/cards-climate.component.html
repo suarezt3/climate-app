@@ -1,4 +1,14 @@
-<h1>Cards-Component</h1>
-<p>{{cities?.location?.name}}</p>
-<button (click)="allData()" >Bogota</button>
-<button (click)="allDatas()" >Medellin</button>
+ <form class="form" [formGroup]="myForm" (ngSubmit)="submit()">
+  <div>
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input class="p-inputtext-sm" type="text" pInputText placeholder="Search" formControlName="city">
+    </span>
+  </div>
+  <div>
+    <button class="p-button-sm" pButton type="submit">Enviar</button>
+  </div>
+
+</form>
+
+<h1>{{cities?.city?.name}}</h1>

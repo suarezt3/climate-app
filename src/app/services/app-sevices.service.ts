@@ -9,20 +9,26 @@ export class AppSevicesService {
 
   public dataForecast: any;
 
-  private apiUrl: string = 'http://api.weatherstack.com/forecast'
-  private apiKey: string = 'ab4d5260f593d995b59aacaf93c1dd8e'
+  private apiUrl: string = 'http://api.openweathermap.org/data/2.5/forecast'
+  private apiKey: string = 'f4f1982624c619857cfdc260de0fa20e'
 
 
   constructor(private http: HttpClient) { }
 
 
-
-  getForecast(city: string) {
+  getForecast2(city: string) {
     const params = new HttpParams()
-    .set('access_key', this.apiKey)
-    .set('query', city)
+    .set('appid', this.apiKey)
+    .set('id', '524901')
+    .set('lang', 'es')
+    .set('units', 'metric')
+    .set('q', city)
     return this.http.get(`${this.apiUrl}`, {params}).pipe()
   }
+
+
+
+
 
 
 }

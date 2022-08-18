@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppData} from 'src/app/interfaces/data.interface';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AppSevicesService } from 'src/app/services/app-sevices.service';
 
 @Component({
@@ -9,33 +9,41 @@ import { AppSevicesService } from 'src/app/services/app-sevices.service';
 })
 export class CardsClimateComponent implements OnInit {
 
-  public cities!: any
+  public cities!: any;
+  public myForm!: FormGroup
+
+
+  constructor(private appservice: AppSevicesService, private fb: FormBuilder) {}
 
 
 
-  constructor(private appservice: AppSevicesService) {this.cities = this.appservice.dataForecast}
 
 
 
   ngOnInit(): void {
-  this.appservice.getForecast('Cali').subscribe((resp)=> {
+    this.myForm = this.fb.group({
+      city: ['', []]
+    })
+
+
+  this.appservice.getForecast2('Cali').subscribe((resp)=> {
     console.log("DATA", resp);
 
-    this.cities = Object.assign(resp)
+    this.cities = resp
   })
 
   }
 
- allData() {
-      this.appservice.getForecast('Bogota').subscribe((resp) => {
-        this.cities = Object.assign(resp)
-      })
-  }
 
-  allDatas() {
-   this.appservice.getForecast('Medellin').subscribe((resp) => {
-    this.cities = Object.assign(resp)
-   })
- }
+  submit() {
+    const city = this.myForm.get('city')?.value
+    this.appservice.getForecast2(city).subscribe((resp) => {
+      this.cities = Object.assign(resp)
+      console.log("DATA", resp);
+
+      this.myForm.reset()
+    })
+}
+
 
 }
